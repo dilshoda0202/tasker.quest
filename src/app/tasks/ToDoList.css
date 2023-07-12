@@ -1,0 +1,60 @@
+.TodoList {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: lightpink;
+  }
+  
+  .TodoList h1 {
+    text-align: center;
+  }
+  
+  .TodoList input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .TodoList input[type="datetime-local"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .TodoList button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: clear;
+    color: black;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .TodoList button:hover {
+    background-color: #45a049;
+  }
+  
+  .TodoList ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .TodoList li {
+    margin-bottom: 10px;
+  }
+  
+  .TodoList li span {
+    font-weight: bold;
+  }
+  
+  .TodoList li div {
+    margin-top: 5px;
+  }
+  
+  .TodoList li button {
+    margin-left: 10px;
+  }
+  
