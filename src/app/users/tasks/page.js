@@ -19,6 +19,21 @@ function TodoList() {
   const [newTaskCategory, setNewTaskCategory] = useState('work');
   const router = useRouter();
 
+  useEffect(() => {
+    fetchTodos();
+  }, []);
+
+  const fetchTodos = () => {
+    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/tasks`)
+      .then((response) => response.json())
+      .then((data) => {
+        setTodos(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching todos:', error);
+      });
+  }
+
   const addTask = () => {
     if (newTask.trim() === '' || !startDateTime || !endDateTime) {
       return;
@@ -37,6 +52,14 @@ function TodoList() {
     setStartDateTime('');
     setEndDateTime('');
   };
+
+  axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/tasks`, newTaskItem)
+    .then((response) => {
+      console.log('New todo created:', response.data);
+      setNewTask('');
+      setStartDateTime('');
+      setEndDateTime('');
+    })
 
   const handleDateTimeChange = (e, dateTimeType) => {
     const value = e.target.value;
