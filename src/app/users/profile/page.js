@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import jwtDecode from 'jwt-decode';
 import { useRouter } from 'next/navigation';
 import handleLogout from '@/app/utils/handleLogout';
+import axios from 'axios';
 
 export default function Profile() {
     // state is what the data is representing in realtime
