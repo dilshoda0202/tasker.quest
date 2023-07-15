@@ -31,7 +31,7 @@ function NewTodoPage() {
       endDateTime: endDateTime,
     };
 
-    axios.post('/task', newTaskItem)
+    axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/tasks`, newTaskItem)
       .then((response) => {
         console.log('New todo created:', response.data);
         setNewTask('');
@@ -52,6 +52,23 @@ function NewTodoPage() {
           value={newTask}
           onChange={handleNewTaskChange}
           placeholder="Enter a task"
+        />
+      </div>
+      <div>
+        <strong>Priority:</strong>
+        <select>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+        </select>
+      </div>
+      <div>
+        <strong>Description:</strong>
+        <input
+            type="description"
+            value={newTaskDescription}
+            onChange={(e) => setNewTaskDescription(e.target.value)}
+            placeholder="Enter a task description"
         />
       </div>
       <div>
