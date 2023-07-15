@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './ToDoList.css';
-// import { useNavigate } from 'react-router-dom';
 import { useRouter } from 'next/navigation';
 
 
@@ -25,6 +24,8 @@ function TodoList() {
     const newTaskItem = {
       id: Date.now(),
       text: newTask,
+      description: newTaskDescription,
+      priority: newTaskPriority,
       startDateTime: startDateTime,
       endDateTime: endDateTime,
       completed: false
@@ -98,29 +99,29 @@ function TodoList() {
 
   return (
     <div className="TodoList">
-    <h1>Todo List</h1>
-    <div>
-      <input
-        type="text"
-        value={newTask}
-        onChange={(e) => setNewTask(e.target.value)}
-        placeholder="Enter a task"
-      />
+      <h1>Todo List</h1>
       <div>
+        <input
+          type="text"
+          value={newTask}
+          onChange={(e) => setNewTask(e.target.value)}
+          placeholder="Enter a task"
+        />
+        <div>
           <input
-            type="text"
+            type="description"
             value={newTaskDescription}
             onChange={(e) => setNewTaskDescription(e.target.value)}
             placeholder="Enter a task description"
           />
         </div>
         <div><strong>Priority:</strong></div>
-        <select value={newTaskPriority} onChange={(e) => setNewTaskPriority(e.target.value)}>
+        <select type="priority" value={newTaskPriority} onChange={(e) => setNewTaskPriority(e.target.value)}>
           <option value="low">Low</option>
           <option value="medium">Medium</option>
           <option value="high">High</option>
         </select>
-      <div>
+        <div>
           <strong>Start Date:</strong>
           <input
             type="datetime-local"
@@ -130,7 +131,7 @@ function TodoList() {
           />
         </div>
         <div>
-          <strong>End Date:</strong>
+          <strong>Due Date:</strong>
           <input
             type="datetime-local"
             value={endDateTime}
@@ -163,10 +164,10 @@ function TodoList() {
 }
 
 function Task({ task, completeTask, deleteTask, handleTodoClick }) {
-  const { id, text, startDateTime, endDateTime, completed } = task;
+  let { id, text, startDateTime, endDateTime, completed, newTaskDescription, newTaskPriority } = task;
   const [timeRemaining, setTimeRemaining] = useState(null);
   const [countdownActive, setCountdownActive] = useState(false);
-  
+
 
   useEffect(() => {
     if (countdownActive) {
@@ -215,13 +216,13 @@ function Task({ task, completeTask, deleteTask, handleTodoClick }) {
         {text}
       </span>
       <h2>ToDo Details</h2>
-    <p>ID: {id}</p>
-    <div>
-      <strong>Description:</strong> {task.description}
-    </div>
-    <div>
-      <strong>Priority:</strong> {task.newTaskPriority}
-    </div>
+      <p>ID: {id}</p>
+      <div>
+        <strong>Description:</strong> {task.description}
+      </div>
+      <div className='priority'>
+        <strong>Priority:</strong> {task.priority}
+      </div>
       <div>
         <strong>Start:</strong> {new Date(startDateTime).toLocaleString()}
       </div>
