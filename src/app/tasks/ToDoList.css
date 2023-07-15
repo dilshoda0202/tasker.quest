@@ -58,3 +58,15 @@
     margin-left: 10px;
   }
   
+  .priority-low {
+    color: green;
+  }
+  
+  .priority-medium {
+    color: blue;
+  }
+  
+  .priority-high {
+    color: red;
+    font-weight: bold;
+  }
