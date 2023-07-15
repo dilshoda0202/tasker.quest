@@ -5,6 +5,8 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import jwtDecode from 'jwt-decode';
 import handleLogout from '@/app/utils/handleLogout';
+import axios from 'axios';
+import setAuthToken from '@/app/utils/setAuthToken';
 
 
 export default function EditUser() {
@@ -25,14 +27,14 @@ export default function EditUser() {
 	const [zipCode, setZipCode] = useState('');
 
 	const expirationTime = new Date(parseInt(localStorage.getItem('expiration')) * 1000);
-    let currentTime = Date.now();
+	let currentTime = Date.now();
 
-    // make a condition that compares exp and current time
-    if (currentTime >= expirationTime) {
-        handleLogout();
-        alert('Session has ended. Please login to continue.');
-        router.push('/users/login');
-    }
+	// make a condition that compares exp and current time
+	if (currentTime >= expirationTime) {
+		handleLogout();
+		alert('Session has ended. Please login to continue.');
+		router.push('/users/login');
+	}
 
 	// create the 
 	const handleFirstName = (e) => {
@@ -111,8 +113,9 @@ export default function EditUser() {
 	};
 
 	useEffect(() => {
+		setAuthToken(localStorage.getItem('jwtToken'));
 		if (localStorage.getItem('jwtToken')) {
-			fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/email/${localStorage.getItem('email')}`)
+			axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/email/${localStorage.getItem('email')}`)
 				.then((res) => res.json())
 				.then((data) => {
 					// data is an object

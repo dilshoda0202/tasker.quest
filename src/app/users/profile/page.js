@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import jwtDecode from 'jwt-decode';
 import { useRouter } from 'next/navigation';
 import handleLogout from '@/app/utils/handleLogout';
+import axios from 'axios';
+import setAuthToken from '@/app/utils/setAuthToken';
 
 export default function Profile() {
     // state is what the data is representing in realtime
@@ -22,8 +24,9 @@ export default function Profile() {
     }
 
     useEffect(() => {
+        setAuthToken(localStorage.getItem('jwtToken'));
         if (localStorage.getItem('jwtToken')) {
-            fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/email/${localStorage.getItem('email')}`)
+            axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/email/${localStorage.getItem('email')}`)
                 .then((res) => res.json())
                 .then((data) => {
                     // data is an object
