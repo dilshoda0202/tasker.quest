@@ -3,12 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import './ToDoList.css';
+import './EventsPage.css';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
 
-function TodoList() {
+function EventList() {
   const [todos, setTodos] = useState([]);
   const [newTask, setNewTask] = useState('');
   const [startDateTime, setStartDateTime] = useState('');
@@ -26,7 +26,7 @@ function TodoList() {
   }, []);
 
   const fetchTodos = () => {
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/tasks`)
+    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/events`)
       .then((response) => response.json())
       .then((data) => {
         setTodos(data);
@@ -55,7 +55,7 @@ function TodoList() {
     setEndDateTime('');
   };
 
-  axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/tasks`, newTaskItem)
+  axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/events`, newTaskItem)
     .then((response) => {
       console.log('New todo created:', response.data);
       setNewTask('');
@@ -126,27 +126,27 @@ function TodoList() {
 
   return (
     <div className="TodoList">
-      <h1>Todo List</h1>
+      <h1>!EVENTS List! :</h1>
       <div>
         <input
           type="text"
           value={newTask}
           onChange={(e) => setNewTask(e.target.value)}
-          placeholder="Enter a task"
+          placeholder="Enter a new event!"
         />
         <div>
           <input
             type="description"
             value={newTaskDescription}
             onChange={(e) => setNewTaskDescription(e.target.value)}
-            placeholder="Enter a task description"
+            placeholder="Description of this cool event!"
           />
         </div>
         <div><strong>Priority:</strong></div>
         <select type="priority" value={newTaskPriority} onChange={(e) => setNewTaskPriority(e.target.value)}>
-          <option value="low">Low</option>
-          <option value="medium">Medium</option>
-          <option value="high">High</option>
+          <option value="low">I might not go</option>
+          <option value="medium">Dont want to forget</option>
+          <option value="high">WOOT WOOT</option>
         </select>
         <div>
           <strong>Start Date:</strong>
@@ -158,7 +158,7 @@ function TodoList() {
           />
         </div>
         <div>
-          <strong>Due Date:</strong>
+          <strong>End Date:</strong>
           <input
             type="datetime-local"
             value={endDateTime}
@@ -171,20 +171,20 @@ function TodoList() {
               type="location"
               value={newTaskLocation}
               onChange={(e) => setNewTaskLocation(e.target.value)}
-              placeholder="Enter a task location"
+              placeholder="Enter the events location"
             />
           </div>
           <div>
             <strong>Category:</strong>
             <select type="category" value={newTaskCategory} onChange={(e) => setNewTaskCategory(e.target.value)}>
-              <option value="work">Work</option>
-              <option value="school">School</option>
-              <option value="home">Home</option>
+              <option value="work">Bday</option>
+              <option value="school">Holiday</option>
+              <option value="home">Party</option>
               <option value="other">Other</option>
             </select>
           </div>
         </div>
-        <button onClick={addTask}>Add Task</button>
+        <button onClick={addTask}>Add Event</button>
       </div>
       <div>
         <h2>Calendar</h2>
@@ -260,7 +260,7 @@ function Task({ task, completeTask, deleteTask, handleTodoClick }) {
       <span style={{ textDecoration: completed ? 'line-through' : 'none', color: completed ? 'red' : 'black' }}>
         {text}
       </span>
-      <h2>ToDo Details</h2>
+      <h2>Event Details</h2>
       <p>ID: {id}</p>
       <div>
         <strong>Description:</strong> {task.description}
@@ -292,4 +292,4 @@ function Task({ task, completeTask, deleteTask, handleTodoClick }) {
   );
 }
 
-export default TodoList;
+export default EventList;
