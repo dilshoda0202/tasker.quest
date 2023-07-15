@@ -4,8 +4,8 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
-import TodoList from './tasks';
-import SingleToDo from './tasks/SingleToDo';
+import TodoList from './users/tasks';
+import SingleToDo from './users/tasks/SingleToDo';
 import Navbar from './Navbar';
 
 function AppRouter() {

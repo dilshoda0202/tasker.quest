@@ -15,7 +15,24 @@ function TodoList() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [newTaskDescription, setNewTaskDescription] = useState('');
   const [newTaskPriority, setNewTaskPriority] = useState('low');
+  const [newTaskLocation, setNewTaskLocation] = useState('');
+  const [newTaskCategory, setNewTaskCategory] = useState('work');
   const router = useRouter();
+
+  useEffect(() => {
+    fetchTodos();
+  }, []);
+
+  const fetchTodos = () => {
+    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/tasks`)
+      .then((response) => response.json())
+      .then((data) => {
+        setTodos(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching todos:', error);
+      });
+  }
 
   const addTask = () => {
     if (newTask.trim() === '' || !startDateTime || !endDateTime) {
@@ -35,6 +52,14 @@ function TodoList() {
     setStartDateTime('');
     setEndDateTime('');
   };
+
+  axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/tasks`, newTaskItem)
+    .then((response) => {
+      console.log('New todo created:', response.data);
+      setNewTask('');
+      setStartDateTime('');
+      setEndDateTime('');
+    })
 
   const handleDateTimeChange = (e, dateTimeType) => {
     const value = e.target.value;
@@ -138,6 +163,24 @@ function TodoList() {
             onChange={(e) => handleDateTimeChange(e, 'end')}
             placeholder="Select end date/time"
           />
+          <div>
+            <strong>Location:</strong>
+            <input
+              type="location"
+              value={newTaskLocation}
+              onChange={(e) => setNewTaskLocation(e.target.value)}
+              placeholder="Enter a task location"
+            />
+          </div>
+          <div>
+            <strong>Category:</strong>
+            <select type="category" value={newTaskCategory} onChange={(e) => setNewTaskCategory(e.target.value)}>
+              <option value="work">Work</option>
+              <option value="school">School</option>
+              <option value="home">Home</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
         </div>
         <button onClick={addTask}>Add Task</button>
       </div>
@@ -222,6 +265,12 @@ function Task({ task, completeTask, deleteTask, handleTodoClick }) {
       </div>
       <div className='priority'>
         <strong>Priority:</strong> {task.priority}
+      </div>
+      <div>
+        <strong>Location:</strong> {task.location}
+      </div>
+      <div>
+        <strong>Category:</strong> {task.category}
       </div>
       <div>
         <strong>Start:</strong> {new Date(startDateTime).toLocaleString()}

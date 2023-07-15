@@ -1,13 +1,5 @@
-'use client'
-
-// Home Page
-
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
-
-// ReactDOM.render(<AppRouter />, document.getElementById('root'));
-
 
 function Navbar() {
   return (
@@ -17,13 +9,16 @@ function Navbar() {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/login">Login</Link>
+          <Link to="/users/signup">Signup</Link>
         </li>
         <li>
-          <Link to="/signup">Signup</Link>
+          <Link to="/users/login">Login</Link>
         </li>
         <li>
-          <Link to="/todo-list">Todo List</Link>
+          <Link to="/users/profile">Profile</Link>
+        </li>
+        <li>
+          <Link to="/tasks">Tasks</Link>
         </li>
       </ul>
     </nav>
