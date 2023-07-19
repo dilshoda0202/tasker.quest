@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Event from './Event';
 import jwt_decode from 'jwt-decode';
+import axios from 'axios';
 
 export default function EventTable({ events }) {
   const user = jwt_decode(localStorage.getItem('jwtToken'));
@@ -47,16 +48,35 @@ export default function EventTable({ events }) {
 
   // Function to mark a task as completed
   const markCompleted = (taskId) => {
-    const completedTask = tasks.find((task) => task._id === taskId);
+    const completedTask = userEvents.find((event) => event._id === taskId);
     if (completedTask) {
-      setCompletedTasks([...completedTasks, { ...completedTask, title: 'Completed Task' }]);
-      setTasks(tasks.filter((task) => task._id !== taskId));
+      axios.put(`${process.env.NEXT_PUBLIC_SERVER_URL}/events/${taskId}`, { title: 'Completed Task' })
+        .then((response) => {
+          setTasks((prevTasks) => {
+            return prevTasks.map((event) => {
+              if (event._id === taskId) {
+                return { ...event, title: 'Completed Task' };
+              } else {
+                return event;
+              }
+            });
+          });
+        })
+        .catch((error) => {
+          console.log('Error:', error);
+        });
     }
   };
 
   // Function to delete a task
   const deleteTask = (taskId) => {
-    setTasks(tasks.filter((task) => task._id !== taskId));
+    axios.delete(`${process.env.NEXT_PUBLIC_SERVER_URL}/events/${taskId}`)
+      .then((response) => {
+        setTasks(userEvents.filter((event) => event._id !== taskId));
+      })
+      .catch((error) => {
+        console.log('Error:', error);
+      });
   };
 
   useEffect(() => {
@@ -108,7 +128,6 @@ export default function EventTable({ events }) {
           <p>Priority: {task.priority}</p>
           <p>Location: {task.location}</p>
           <p>Category: {task.category}</p>
-          <p>User: {task.user}</p>
           {timers[task._id] !== null && timers[task._id] > 0 && (
             <p>Time Remaining: {formatTime(timers[task._id])}</p>
           )}
