@@ -10,10 +10,10 @@ export default function FilterableTaskTable() {
   useEffect(() => {
     fetch('http://localhost:8000/tasks')
       .then((res) => res.json())
-      .then((data) => {
-        console.log('Can you see data?', data)
+      .then((newData) => {
+        console.log('Can you see data?', newData)
         // data is an object
-        setData(data);
+        setData(newData.data);
         setLoading(false);
       })
   }, []);

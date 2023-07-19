@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react';
-import EventTable from './eventTable';
+import EventTable from './EventTable';
 
 export default function FilterableTaskTable() {
   // state is what the data is representing in realtime
@@ -10,11 +10,12 @@ export default function FilterableTaskTable() {
   useEffect(() => {
     fetch('http://localhost:8000/events')
       .then((res) => res.json())
-      .then((data) => {
-        console.log('Can you see data?', data)
-        // data is an object
-        setData(data);
+      .then((newData) => {
+        // console.log('Can you see newData?', newData)
+        setData(newData);
+        // console.log(data)
         setLoading(false);
+        
       })
   }, []);
 
@@ -25,5 +26,8 @@ export default function FilterableTaskTable() {
     <main>
       <EventTable events={data.events} />
     </main>
+
+
+
   )
 }
