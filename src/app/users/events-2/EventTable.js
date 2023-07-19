@@ -38,7 +38,5 @@ export default function EventTable({ events }) {
             </thead>
             <tbody>{rows}</tbody>
         </table>
-
-// const filterData = newData.filter(user => user.id === '64b706b265a2ebe804f518c6');
     )
 }
