@@ -78,6 +78,10 @@ const NewEvent = () => {
         setCategory(e.target.value);
     };
 
+    const handleCustomCategory = (e) => {
+        setCategory(e.target.value);
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -101,6 +105,8 @@ const NewEvent = () => {
             })
             .catch((error) => console.log('===> Error in Task', error));
     };
+
+    const categoryOptions = ["Personal", "School", "Work", "Other"];
 
     return (
         <div className="row mt-4">
@@ -180,13 +186,28 @@ const NewEvent = () => {
                         </div>
                         <div className="form-group">
                             <label htmlFor="category">Category</label>
-                            <input
-                                type="text"
+                            <select
                                 name="category"
                                 value={category}
                                 onChange={handleCategory}
                                 className="form-control"
-                            />
+                            >
+                                {categoryOptions.map((option) => (
+                                    <option key={option} value={option}>
+                                        {option}
+                                    </option>
+                                ))}
+                            </select>
+                            {category === "Other" && (
+                                <input
+                                    type="text"
+                                    name="otherCategory"
+                                    placeholder="Enter your custom category"
+                                    className="form-control mt-2"
+                                    value={category}
+                                    onChange={handleCustomCategory}
+                                />
+                            )}
                         </div>
                         <button type="submit" className="btn btn-primary float-right custom-button">
                             Submit
