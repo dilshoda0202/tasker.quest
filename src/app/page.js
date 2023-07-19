@@ -14,40 +14,43 @@ export default function Dashboard() {
 
   const [isLoading, setLoading] = useState(true);
 
-  const expirationTime = new Date(parseInt(localStorage.getItem('expiration')) * 1000);
-  let currentTime = Date.now();
+  if (typeof window !== 'undefined') {
+    const expirationTime = new Date(parseInt(localStorage.getItem('expiration')) * 1000);
+    let currentTime = Date.now();
 
-  // make a condition that compares exp and current time
-  if (currentTime >= expirationTime) {
-    handleLogout();
-    alert('Session has ended. Please login to continue.');
-    router.push('/users/login');
+    // make a condition that compares exp and current time
+    if (currentTime >= expirationTime) {
+      handleLogout();
+      alert('Session has ended. Please login to continue.');
+      router.push('/users/login');
+    }
   }
 
   useEffect(() => {
-    if (localStorage.getItem('jwtToken')) {
-      fetch(`${ process.env.NEXT_PUBLIC_SERVER_URL }/users/email/${ localStorage.getItem('email') }`)
-        .then((res) => res.json())
-        .then((data) => {
-          // data is an object
-          let userData = jwtDecode(localStorage.getItem('jwtToken'));
-          if (userData.email === localStorage.getItem('email')) {
-            setData(data.user[0]);
-            setLoading(false);
-          } else {
+    if (typeof window !== 'undefined') {
+      if (localStorage.getItem('jwtToken')) {
+        fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/email/${localStorage.getItem('email')}`)
+          .then((res) => res.json())
+          .then((data) => {
+            // data is an object
+            let userData = jwtDecode(localStorage.getItem('jwtToken'));
+            if (userData.email === localStorage.getItem('email')) {
+              setData(data.user[0]);
+              setLoading(false);
+            } else {
+              router.push('/users/login');
+            }
+
+          })
+          .catch((error) => {
+            console.log(error);
             router.push('/users/login');
-          }
+          });
+      } else {
+        router.push('/users/login');
+      }
 
-        })
-        .catch((error) => {
-          console.log(error);
-          router.push('/users/login');
-        });
-    } else {
-      router.push('/users/login');
     }
-
-
   }, []);
 
   useEffect(() => {
