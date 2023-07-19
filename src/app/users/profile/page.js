@@ -11,40 +11,43 @@ export default function Profile() {
     const [data, setData] = useState(null);
     const [isLoading, setLoading] = useState(true);
 
-    const expirationTime = new Date(parseInt(localStorage.getItem('expiration')) * 1000);
-    let currentTime = Date.now();
+    if (typeof window !== 'undefined') {
+        const expirationTime = new Date(parseInt(localStorage.getItem('expiration')) * 1000);
+        let currentTime = Date.now();
 
-    // make a condition that compares exp and current time
-    if (currentTime >= expirationTime) {
-        handleLogout();
-        alert('Session has ended. Please login to continue.');
-        router.push('/users/login');
+        // make a condition that compares exp and current time
+        if (currentTime >= expirationTime) {
+            handleLogout();
+            alert('Session has ended. Please login to continue.');
+            router.push('/users/login');
+        }
     }
 
     useEffect(() => {
-        if (localStorage.getItem('jwtToken')) {
-            fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/email/${localStorage.getItem('email')}`)
-                .then((res) => res.json())
-                .then((data) => {
-                    // data is an object
-                    let userData = jwtDecode(localStorage.getItem('jwtToken'));
-                    if (userData.email === localStorage.getItem('email')) {
-                        setData(data.user[0]);
-                        setLoading(false);
-                    } else {
+        if (typeof window !== 'undefined') {
+            if (localStorage.getItem('jwtToken')) {
+                fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/email/${localStorage.getItem('email')}`)
+                    .then((res) => res.json())
+                    .then((data) => {
+                        // data is an object
+                        let userData = jwtDecode(localStorage.getItem('jwtToken'));
+                        if (userData.email === localStorage.getItem('email')) {
+                            setData(data.user[0]);
+                            setLoading(false);
+                        } else {
+                            router.push('/users/login');
+                        }
+
+                    })
+                    .catch((error) => {
+                        console.log(error);
                         router.push('/users/login');
-                    }
+                    });
+            } else {
+                router.push('/users/login');
+            }
 
-                })
-                .catch((error) => {
-                    console.log(error);
-                    router.push('/users/login');
-                });
-        } else {
-            router.push('/users/login');
         }
-
-
     }, []);
 
     if (isLoading) return <p>Loading...</p>;
@@ -57,8 +60,6 @@ export default function Profile() {
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item"><a href="/">Home</a></li>
                         <li className="breadcrumb-item"><a href="/users/profile">Profile</a></li>
-                        <li className="breadcrumb-item"><a href="/users/edit">Edit Profile</a></li>
-                        <li className="breadcrumb-item"><a href="/users/tasks">Task List</a></li>
                         <li className="breadcrumb-item" onClick={handleLogout}><a href="">Logout</a></li>
                     </ol>
                 </nav>
@@ -78,7 +79,6 @@ export default function Profile() {
                                     <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" className="rounded-circle" width="150" />
                                     <div className="mt-3">
                                         <h4>{data.firstName} {data.lastName}</h4>
-                                        <p className="text-secondary mb-1">{data.jobTitle}</p>
                                         <p className="text-muted font-size-sm">{data.address.city}, {data.address.state}</p>
                                         <button className="btn btn-primary">Follow</button>
                                         <button className="btn btn-outline-primary">Message</button>

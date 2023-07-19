@@ -24,15 +24,17 @@ export default function EditUser() {
 	const [state, setState] = useState('');
 	const [zipCode, setZipCode] = useState('');
 
-	const expirationTime = new Date(parseInt(localStorage.getItem('expiration')) * 1000);
-    let currentTime = Date.now();
+	if (typeof window !== 'undefined') {
+		const expirationTime = new Date(parseInt(localStorage.getItem('expiration')) * 1000);
+		let currentTime = Date.now();
 
-    // make a condition that compares exp and current time
-    if (currentTime >= expirationTime) {
-        handleLogout();
-        alert('Session has ended. Please login to continue.');
-        router.push('/users/login');
-    }
+		// make a condition that compares exp and current time
+		if (currentTime >= expirationTime) {
+			handleLogout();
+			alert('Session has ended. Please login to continue.');
+			router.push('/users/login');
+		}
+	}
 
 	// create the 
 	const handleFirstName = (e) => {
@@ -111,33 +113,35 @@ export default function EditUser() {
 	};
 
 	useEffect(() => {
-		if (localStorage.getItem('jwtToken')) {
-			fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/email/${localStorage.getItem('email')}`)
-				.then((res) => res.json())
-				.then((data) => {
-					// data is an object
-					let userData = jwtDecode(localStorage.getItem('jwtToken'));
+		if (typeof window !== 'undefined') {
+			if (localStorage.getItem('jwtToken')) {
+				fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/email/${localStorage.getItem('email')}`)
+					.then((res) => res.json())
+					.then((data) => {
+						// data is an object
+						let userData = jwtDecode(localStorage.getItem('jwtToken'));
 
-					if (data.user[0].email === userData.email) {
-						setData(data.user[0]);
-						setFirstName(data.user[0].firstName);
-						setLastName(data.user[0].lastName);
-						setEmail(data.user[0].email);
-						setJobTitle(data.user[0].jobTitle);
-						setNumber(data.user[0].number);
-						setStreetAddress(data.user[0].address.streetAddress);
-						setCity(data.user[0].address.city);
-						setState(data.user[0].address.state);
-						setZipCode(data.user[0].address.zipCode);
-						setLoading(false);
-					}
-				})
-				.catch((error) => {
-					console.log(error);
-					router.push('/users/login');
-				});
-		} else {
-			router.push('/users/login');
+						if (data.user[0].email === userData.email) {
+							setData(data.user[0]);
+							setFirstName(data.user[0].firstName);
+							setLastName(data.user[0].lastName);
+							setEmail(data.user[0].email);
+							setJobTitle(data.user[0].jobTitle);
+							setNumber(data.user[0].number);
+							setStreetAddress(data.user[0].address.streetAddress);
+							setCity(data.user[0].address.city);
+							setState(data.user[0].address.state);
+							setZipCode(data.user[0].address.zipCode);
+							setLoading(false);
+						}
+					})
+					.catch((error) => {
+						console.log(error);
+						router.push('/users/login');
+					});
+			} else {
+				router.push('/users/login');
+			}
 		}
 	}, []);
 
