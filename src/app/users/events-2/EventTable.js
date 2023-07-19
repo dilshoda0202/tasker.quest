@@ -1,16 +1,23 @@
 import Event from './Event';
+import jwt_decode from 'jwt-decode';
 
 export default function EventTable({ events }) {
     const rows = [];
+    console.log('eventTable: ', events)
+    const user = jwt_decode(localStorage.getItem('jwtToken'));
+    console.log(user)
 
     events.forEach((event) => {
         // each user and push them inside the array with the User component (have not made)
-        rows.push(
+        if( event.user === user.id) {
+            rows.push(
             <Event
                 event={event}
                 key={event._id} />
-        )
+            )
+        }
     })
+    
 
     return (
         <table>
@@ -31,5 +38,7 @@ export default function EventTable({ events }) {
             </thead>
             <tbody>{rows}</tbody>
         </table>
+
+// const filterData = newData.filter(user => user.id === '64b706b265a2ebe804f518c6');
     )
 }
