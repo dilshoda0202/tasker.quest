@@ -1,9 +1,13 @@
 .custom-card {
     background-color: #d9ead3;
-    padding: 40px;
+    padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Increased box-shadow */
     transition: box-shadow 0.3s ease-in-out;
+    margin: 200px;
+    margin-top: 50px;
+    /* Added margin around the card */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -12,7 +16,8 @@
 }
 
 .custom-card:hover {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+    /* Increased box-shadow on hover */
 }
 
 .custom-heading {
@@ -90,5 +95,3 @@
 .custom-button:hover {
     background-color: #fff2cc;
 }
-
-/* Add any additional custom styles and animations here */
