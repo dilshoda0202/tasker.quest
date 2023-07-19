@@ -5,10 +5,13 @@ import jwtDecode from 'jwt-decode';
 import { useRouter } from 'next/navigation';
 import handleLogout from '@/app/utils/handleLogout';
 
-export default function Profile() {
+export default function Dashboard() {
   // state is what the data is representing in realtime
   const router = useRouter();
   const [data, setData] = useState(null);
+  const [tasks, setTasks] = useState(null);
+  const [todoTasks, setTodoTasks] = useState(null);
+
   const [isLoading, setLoading] = useState(true);
 
   const expirationTime = new Date(parseInt(localStorage.getItem('expiration')) * 1000);
@@ -47,6 +50,31 @@ export default function Profile() {
 
   }, []);
 
+  useEffect(() => {
+    console.log(data)
+    fetch('http://localhost:8000/tasks/')
+      .then((res) => res.json())
+      .then((tasks) => {
+        console.log('Can you see data?', tasks)
+        // data is an object
+        setTasks(tasks);
+        setTodoTasks(tasks);
+
+        setLoading(false);
+      })
+  }, []);
+
+
+
+  console.log('tasks', todoTasks)
+
+  //   return (
+  //     <main>
+  //       <TaskTable tasks={data.tasks} />
+  //     </main>
+  //   )
+  // }
+
   if (isLoading) return <p>Loading...</p>;
   if (!data) return <p>No data shown...</p>;
   return (
@@ -63,38 +91,99 @@ export default function Profile() {
           </ol>
         </nav>
 
-        <div>
-          <h1>Hello {data.firstName} </h1>
+        <div className="col-md-8">
+          <div className="card mb-3">
+            <div className="card-body">
+
+              <div className="col-sm-9 text-secondary">
+
+                <br />
+                {tasks ? <p>Tasks Todo: {tasks.tasks.filter(task => task.status === 'Todo').length}</p> : null}
+                {tasks ? <p>Tasks In Progress: {tasks.tasks.filter(task => task.status === 'In Progress').length}</p> : null}
+
+                {tasks ? <p>Tasks Completed: {tasks.tasks.filter(task => task.status === 'Completed').length}</p> : null}
+
+
+              </div>
+            </div>
+            <hr />
+            <div className="row">
+              <div className="col-sm-12">
+                <a className="btn btn-info " target="__blank" href="/users/tasks/new">Create A Task</a>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-sm-12">
+                <a className="btn btn-info " target="__blank" href="/users/events/new">Create A Event</a>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div>
-          <h1>My tasks/todo</h1>
-          <ul>
-            <li></li>
-          </ul>
-          <button>Create New Task</button>
-        </div>
 
-        <div>
-          <h1>Upcoming Due dates</h1>
-          <ul>
-            <li></li>
-          </ul>
-        </div>
+        <div className="row gutters-sm">
+          <div className="col-md-4 mb-3">
+            <div className="card">
+              <div className="card-body">
+                <h1>My Tasks</h1>
+                <ul>
+                  {todoTasks ? <li>Tasks Todo: {todoTasks.tasks.map(todoTasks => todoTasks.status === 'Todo')}</li> : null}
 
-        <div>
-          <h1>Upcoming events</h1>
-          <ul>
-            <li></li>
-          </ul>
-        </div>
+                </ul>
+              </div>
+            </div>
+          </div>
 
-        <div>
-          <h1>Timer</h1>
-          <button>Start Timer</button>
-        </div>
 
+          <div className="col-md-4 mb-3">
+            <div className="card">
+              <div className="card-body">
+                <div className="d-flex flex-column align-items-center text-center">
+                  <h1>Task Deadline</h1>
+                  <div className="mt-3">
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-md-4 mb-3">
+            <div className="card">
+              <div className="card-body">
+                <div className="d-flex flex-column align-items-center text-center">
+                  <h1>Upcoming Events</h1>
+
+                  <div className="mt-3">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-md-8">
+            <div className="card mb-3">
+              <div className="card-body">
+                <h1>Weather Component</h1>
+
+              </div>
+              <hr />
+            </div>
+          </div>
+
+          <div className="col-md-8">
+            <div className="card mb-3">
+              <div className="card-body">
+                <h1>Timer</h1>
+
+              </div>
+              <hr />
+            </div>
+          </div>
+        </div>
       </div>
+
     </div>
   );
 }
