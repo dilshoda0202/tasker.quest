@@ -58,7 +58,9 @@ export default function Profile() {
                         <li className="breadcrumb-item"><a href="/">Home</a></li>
                         <li className="breadcrumb-item"><a href="/users/profile">Profile</a></li>
                         <li className="breadcrumb-item"><a href="/users/edit">Edit Profile</a></li>
-                        <li className="breadcrumb-item"><a href="/users/tasks">Task List</a></li>
+                        {/* <li className="breadcrumb-item"><a href="/users/tasks-2">Task List</a></li> */}
+                        <li className="breadcrumb-item"><a href="/users/events-2">Event List</a></li>
+                        <li className="breadcrumb-item"><a href="/users/events-2/new">Create Event</a></li>
                         <li className="breadcrumb-item" onClick={handleLogout}><a href="">Logout</a></li>
                     </ol>
                 </nav>
