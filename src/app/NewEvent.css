@@ -1,0 +1,94 @@
+.custom-card {
+    background-color: #d9ead3;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.custom-card:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.custom-heading {
+    color: #918a74;
+    transition: color 0.3s ease-in-out;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.custom-heading:hover {
+    color: #fff2cc;
+}
+
+.user-name {
+    margin-bottom: 40px;
+}
+
+.user-name-text {
+    font-size: 75px;
+    font-weight: bold;
+    animation: color-change 10s infinite linear;
+}
+
+@keyframes color-change {
+    0% {
+        color: #836e56;
+        /* Darker Brown */
+        transform: translateY(0);
+    }
+
+    25% {
+        color: #978c75;
+        /* Darker Tan */
+        transform: translateY(-10px);
+    }
+
+    50% {
+        color: #a79b7c;
+        /* Darker Yellow */
+        transform: translateY(0);
+    }
+
+    75% {
+        color: #7b6d57;
+        /* Darker Olive */
+        transform: translateY(10px);
+    }
+
+    100% {
+        color: #836e56;
+        /* Darker Brown */
+        transform: translateY(0);
+    }
+}
+
+.form-group {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.custom-button {
+    background-color: #918a74;
+    border-color: #918a74;
+    transition: background-color 0.3s ease-in-out;
+    padding: 10px 20px;
+    font-size: 18px;
+}
+
+.custom-button:hover {
+    background-color: #fff2cc;
+}
+
+/* Add any additional custom styles and animations here */
