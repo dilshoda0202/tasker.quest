@@ -15,7 +15,7 @@ export default function FilterableTaskTable() {
         setData(newData);
         // console.log(data)
         setLoading(false);
-        
+
       })
   }, []);
 
