@@ -21,32 +21,36 @@ const NewTask = () => {
     const router = useRouter();
 
     useEffect(() => {
-        const expirationTime = new Date(parseInt(localStorage.getItem('expiration')) * 1000);
-        const currentTime = Date.now();
-        if (currentTime >= expirationTime) {
-            handleLogout();
-            alert('Session has ended. Please login to continue.');
-            router.push('/users/login');
+        if (typeof window !== 'undefined') {
+            const expirationTime = new Date(parseInt(localStorage.getItem('expiration')) * 1000);
+            const currentTime = Date.now();
+            if (currentTime >= expirationTime) {
+                handleLogout();
+                alert('Session has ended. Please login to continue.');
+                router.push('/users/login');
+            }
         }
-        if (localStorage.getItem('jwtToken')) {
-            fetch(`${ process.env.NEXT_PUBLIC_SERVER_URL }/users/email/${ localStorage.getItem('email') }`)
-                .then((res) => res.json())
-                .then((data) => {
-                    // data is an array of users
-                    const userData = jwtDecode(localStorage.getItem('jwtToken'));
-                    if (userData.email === localStorage.getItem('email')) {
-                        setCurrentUser(data.user[0]);
-                        setUser(data.user[0]._id); // Set the user ID to first index 0
-                    } else {
+        if (typeof window !== 'undefined') {
+            if (localStorage.getItem('jwtToken')) {
+                fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/email/${localStorage.getItem('email')}`)
+                    .then((res) => res.json())
+                    .then((data) => {
+                        // data is an array of users
+                        const userData = jwtDecode(localStorage.getItem('jwtToken'));
+                        if (userData.email === localStorage.getItem('email')) {
+                            setCurrentUser(data.user[0]);
+                            setUser(data.user[0]._id); // Set the user ID to first index 0
+                        } else {
+                            router.push('/users/login');
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
                         router.push('/users/login');
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
-                    router.push('/users/login');
-                });
-        } else {
-            router.push('/users/login');
+                    });
+            } else {
+                router.push('/users/login');
+            }
         }
     }, []);
 
@@ -95,7 +99,7 @@ const NewTask = () => {
             category
         };
 
-        axios.post(`${ process.env.NEXT_PUBLIC_SERVER_URL }/tasks`, newTask)
+        axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/tasks`, newTask)
             .then(response => {
                 console.log('===> Yay, new task');
                 console.log(response);
