@@ -140,7 +140,6 @@ const NewEvent = () => {
                                 value={title}
                                 onChange={handleTitle}
                                 className="form-control"
-                                required // Add the required attribute
                             />
                         </div>
                         <div className="form-group">
@@ -151,7 +150,6 @@ const NewEvent = () => {
                                 value={description}
                                 onChange={handleDescription}
                                 className="form-control"
-                                required // Add the required attribute
                             />
                         </div>
                         <div className="form-group">
@@ -161,7 +159,6 @@ const NewEvent = () => {
                                 onChange={handleStartDateChange}
                                 dateFormat="yyyy-MM-dd"
                                 className="form-control"
-                                required // Add the required attribute
                             />
                         </div>
                         <div className="form-group">
@@ -171,7 +168,6 @@ const NewEvent = () => {
                                 onChange={handleEndDateChange}
                                 dateFormat="yyyy-MM-dd"
                                 className="form-control"
-                                required // Add the required attribute
                             />
                         </div>
                         <div className="form-group">
@@ -181,7 +177,6 @@ const NewEvent = () => {
                                 value={priority}
                                 onChange={handlePriority}
                                 className="form-control"
-                                required // Add the required attribute
                             >
                                 <option value="High">High</option>
                                 <option value="Medium">Medium</option>
@@ -196,7 +191,6 @@ const NewEvent = () => {
                                 value={location}
                                 onChange={handleLocation}
                                 className="form-control"
-                                required // Add the required attribute
                             />
                         </div>
                         <div className="form-group">
@@ -206,7 +200,6 @@ const NewEvent = () => {
                                 value={category}
                                 onChange={handleCategory}
                                 className="form-control"
-                                required // Add the required attribute
                             >
                                 {categoryOptions.map((option) => (
                                     <option key={option} value={option}>
@@ -222,7 +215,6 @@ const NewEvent = () => {
                                     className="form-control mt-2"
                                     value={category}
                                     onChange={handleCustomCategory}
-                                    required // Add the required attribute
                                 />
                             )}
                         </div>

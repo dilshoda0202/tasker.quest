@@ -111,63 +111,64 @@ export default function EventTable({ events }) {
   return (
 
     <div style={{ background: 'linear-gradient(to bottom right, #FFB6C1, #ADD8E6)', display: 'flex', flexWrap: 'wrap', gap: '20px', padding: '20px', height: '100vh' }}>
-    <div className="custom-card-container"> {/* Add a container class */}
-      <nav aria-label="breadcrumb" className="main-breadcrumb">
-        <ol className="breadcrumb" style={{ display: "flex" }}>
-          <li className="breadcrumb-item"><a href="/">Home</a></li>
-          <li className="breadcrumb-item"><a href="/users/profile">Profile</a></li>
-          <li className="breadcrumb-item"><a href="/users/edit">Edit Profile</a></li>
-          <li className="breadcrumb-item"><a href="/users/events-2">Event List</a></li>
-          <li className="breadcrumb-item"><a href="/users/events-2/new">Create Event</a></li>
-        </ol>
-      </nav>
-      {tasks.map((task) => (
-        <div
-          key={task._id}
-          className="custom-card" // Apply the custom-card class
-          style={{
-            height: '300px',
-            width: '300px',
-            backgroundColor: '#90EE90', // Light green background color for the card
-            border: '1px solid #ccc',
-            padding: '10px',
-            borderRadius: '8px',
-            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-            textDecoration: task.completed ? 'line-through' : 'none', // Apply strikethrough style if the task is completed
-          }}
-        >
-          <h2 className="custom-heading">{task.title}</h2> {/* Apply the custom-heading class */}
-          <p>{task.description}</p>
-          <p>Start Date: {formatDate(task.startDate)}</p>
-          <p>End Date: {formatDate(task.endDate)}</p>
-          <p>Priority: {task.priority}</p>
-          <p>Location: {task.location}</p>
-          <p>Category: {task.category}</p>
-          {timers[task._id] !== null && timers[task._id] > 0 && (
-            <p>Time Remaining: {formatTime(timers[task._id])}</p>
-          )}
-          <button onClick={() => markCompleted(task._id)}>Completed</button>
-          <button onClick={() => deleteTask(task._id)}>Delete</button>
-        </div>
-      ))}
-      {completedTasks.map((completedTask) => (
-        <div
-          key={completedTask._id}
-          className="custom-card" // Apply the custom-card class
-          style={{
-            textDecoration: 'line-through', // Apply strikethrough style for completed tasks
-          }}
-        >
-          <h2 className="custom-heading">{completedTask.title}</h2> {/* Apply the custom-heading class */}
-          <p>{completedTask.description}</p>
-          <p>Start Date: {formatDate(completedTask.startDate)}</p>
-          <p>End Date: {formatDate(completedTask.endDate)}</p>
-          <p>Priority: {completedTask.priority}</p>
-          <p>Location: {completedTask.location}</p>
-          <p>Category: {completedTask.category}</p>
-          <p>User: {completedTask.user}</p>
-        </div>
-      ))}
+      <div className="custom-card-container"> {/* Add a container class */}
+        <nav aria-label="breadcrumb" className="main-breadcrumb">
+          <ol className="breadcrumb" style={{ display: "flex" }}>
+            <li className="breadcrumb-item"><a href="/">Home</a></li>
+            <li className="breadcrumb-item"><a href="/users/profile">Profile</a></li>
+            <li className="breadcrumb-item"><a href="/users/edit">Edit Profile</a></li>
+            <li className="breadcrumb-item"><a href="/users/events-2">Event List</a></li>
+            <li className="breadcrumb-item"><a href="/users/events-2/new">Create Event</a></li>
+          </ol>
+        </nav>
+        {tasks.map((task) => (
+          <div
+            key={task._id}
+            className="custom-card" // Apply the custom-card class
+            style={{
+              height: '300px',
+              width: '300px',
+              backgroundColor: '#90EE90', // Light green background color for the card
+              border: '1px solid #ccc',
+              padding: '10px',
+              borderRadius: '8px',
+              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+              textDecoration: task.completed ? 'line-through' : 'none', // Apply strikethrough style if the task is completed
+            }}
+          >
+            <h2 className="custom-heading">{task.title}</h2> {/* Apply the custom-heading class */}
+            <p>{task.description}</p>
+            <p>Start Date: {formatDate(task.startDate)}</p>
+            <p>End Date: {formatDate(task.endDate)}</p>
+            <p>Priority: {task.priority}</p>
+            <p>Location: {task.location}</p>
+            <p>Category: {task.category}</p>
+            {timers[task._id] !== null && timers[task._id] > 0 && (
+              <p>Time Remaining: {formatTime(timers[task._id])}</p>
+            )}
+            <button onClick={() => markCompleted(task._id)}>Completed</button>
+            <button onClick={() => deleteTask(task._id)}>Delete</button>
+          </div>
+        ))}
+        {completedTasks.map((completedTask) => (
+          <div
+            key={completedTask._id}
+            className="custom-card" // Apply the custom-card class
+            style={{
+              textDecoration: 'line-through', // Apply strikethrough style for completed tasks
+            }}
+          >
+            <h2 className="custom-heading">{completedTask.title}</h2> {/* Apply the custom-heading class */}
+            <p>{completedTask.description}</p>
+            <p>Start Date: {formatDate(completedTask.startDate)}</p>
+            <p>End Date: {formatDate(completedTask.endDate)}</p>
+            <p>Priority: {completedTask.priority}</p>
+            <p>Location: {completedTask.location}</p>
+            <p>Category: {completedTask.category}</p>
+            <p>User: {completedTask.user}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
