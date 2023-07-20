@@ -112,6 +112,15 @@ const NewEvent = () => {
         <div className="row mt-4">
             <div className="col-md-7 offset-md-3">
                 <div className="card card-body custom-card">
+                    <nav aria-label="breadcrumb" className="main-breadcrumb">
+                        <ol className="breadcrumb" style={{ display: "flex" }}>
+                            <li className="breadcrumb-item"><a href="/">Home</a></li>
+                            <li className="breadcrumb-item"><a href="/users/profile">Profile</a></li>
+                            <li className="breadcrumb-item"><a href="/users/edit">Edit Profile</a></li>
+                            <li className="breadcrumb-item"><a href="/users/events-2">Event List</a></li>
+                            <li className="breadcrumb-item"><a href="/users/events-2/new">Create Event</a></li>
+                        </ol>
+                    </nav>
                     <h2 className="py-2 text-center custom-heading">
                         New Event
                     </h2>

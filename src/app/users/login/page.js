@@ -27,7 +27,7 @@ export default function Login() {
     const handleSubmit = (e) => {
         e.preventDefault(); // at the beginning of a submit function
 
-        axios.post(`${ process.env.NEXT_PUBLIC_SERVER_URL }/users/login`, { email, password })
+        axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/login`, { email, password })
             .then(response => {
 
                 localStorage.setItem('jwtToken', response.data.token);
@@ -69,25 +69,21 @@ export default function Login() {
     }
 
     return (
-        <div className="container">
+        <div className="container" style={{ background: "linear-gradient(to bottom, #98FB98, #FFC0CB)", height: '100vh', width: '100%' }}>
             <img
                 src="/logo.png"
                 alt=""
-                style={{ width: '120px', height: '120px' }}
+                style={{ width: '150px', height: '150px' }}
             />
-            <br />
-            <br />
-            <br />
-            <br />
             <div className="row justify-content-center">
                 <div className="col-md-8">
                     <div className="card-group mb-0">
-                        <div className="card p-4">
+                        <div className="card p-4" style={{ backgroundColor: "lightgreen" }}>
                             <form className="card-body" onSubmit={handleSubmit}>
                                 <img
                                     src="/logo.png"
                                     alt=""
-                                    style={{ width: '220px', height: '220px' }}
+                                    style={{ width: '400px', height: '400px' }}
                                 />
                                 <h1>Login</h1>
                                 <p className="text-muted">Sign In to your account</p>
