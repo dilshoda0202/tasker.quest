@@ -27,7 +27,7 @@ const Signup = () => {
       email,
       password,
     };
-    axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/signup`, newUser)
+    axios.post(`${ process.env.NEXT_PUBLIC_SERVER_URL }/users/signup`, newUser)
       .then(response => {
         setRedirect(true);
       })
@@ -72,15 +72,20 @@ const Signup = () => {
             <div className="card p-4" style={{ backgroundColor: "lightgreen" }}>
               <div className="card-body">
                 <form onSubmit={handleSubmit}>
+                  <img
+                    src="/logo.png"
+                    alt=""
+                    style={{ width: '220px', height: '220px' }}
+                  />
                   <h1>Sign Up</h1>
                   <p className="text-muted">Create an account below to get started</p>
                   <div className="input-group mb-3">
                     <span className="input-group-addon"><i className="fa fa-mail-forward" aria-hidden="true"></i></span>
-                    <input type="email" className="form-control" placeholder="Email" value={email} onChange={handleEmail} required/>
+                    <input type="email" className="form-control" placeholder="Email" value={email} onChange={handleEmail} required />
                   </div>
                   <div className="input-group mb-3">
                     <span className="input-group-addon"><i className="fa fa-lock"></i></span>
-                    <input type="password" className="form-control" placeholder="Password" value={password} onChange={handlePassword} required/>
+                    <input type="password" className="form-control" placeholder="Password" value={password} onChange={handlePassword} required />
                   </div>
                   <div className="row">
                     <div className="col-6">
