@@ -13,7 +13,6 @@ export default function Dashboard() {
   const [todoTasks, setTodoTasks] = useState(null);
 
   const [isLoading, setLoading] = useState(true);
-
   if (typeof window !== 'undefined') {
     const expirationTime = new Date(parseInt(localStorage.getItem('expiration')) * 1000);
     let currentTime = Date.now();
@@ -89,7 +88,7 @@ export default function Dashboard() {
             <li className="breadcrumb-item"><a href="/">Home</a></li>
             <li className="breadcrumb-item"><a href="/users/profile">Profile</a></li>
             <li className="breadcrumb-item"><a href="/users/edit">Edit Profile</a></li>
-            <li className="breadcrumb-item"><a href="/users/tasks">Task List</a></li>
+            <li className="breadcrumb-item"><a href="/users/events-2">Task List</a></li>
             <li className="breadcrumb-item" onClick={handleLogout}><a href="">Logout</a></li>
           </ol>
         </nav>
@@ -112,13 +111,13 @@ export default function Dashboard() {
             <hr />
             <div className="row">
               <div className="col-sm-12">
-                <a className="btn btn-info " target="__blank" href="/users/tasks/new">Create A Task</a>
+                <a className="btn btn-info " target="__blank" href="/users/tasks-2/new">Create A Task</a>
               </div>
             </div>
 
             <div className="row">
               <div className="col-sm-12">
-                <a className="btn btn-info " target="__blank" href="/users/events/new">Create A Event</a>
+                <a className="btn btn-info " target="__blank" href="/users/events-2/new">Create A Event</a>
               </div>
             </div>
           </div>
