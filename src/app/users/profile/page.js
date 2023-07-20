@@ -49,15 +49,15 @@ export default function Profile() {
     if (!data) return <p>No data shown...</p>;
 
     return (
-        <div className="container" style={{ background: "linear-gradient(to bottom, gold, silver)" }}>
+        <div className="container" style={{ background: "linear-gradient(to bottom, gold, silver)", height: '100vh' }}>
             <div className="main-body">
                 <nav aria-label="breadcrumb" className="main-breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item"><a href="/">Home</a></li>
                         <li className="breadcrumb-item"><a href="/users/profile">Profile</a></li>
                         <li className="breadcrumb-item"><a href="/users/edit">Edit Profile</a></li>
-                        <li className="breadcrumb-item"><a href="/users/events-2">Task List</a></li>
-                        <li className="breadcrumb-item"><a href="/users/events-2/new">Create Task</a></li>
+                        <li className="breadcrumb-item"><a href="/users/events-2">Event List</a></li>
+                        <li className="breadcrumb-item"><a href="/users/events-2/new">Create Event</a></li>
                         <li className="breadcrumb-item" onClick={handleLogout}><a href="">Logout</a></li>
                     </ol>
                 </nav>

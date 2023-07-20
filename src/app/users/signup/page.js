@@ -27,7 +27,7 @@ const Signup = () => {
       email,
       password,
     };
-    axios.post(`${ process.env.NEXT_PUBLIC_SERVER_URL }/users/signup`, newUser)
+    axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/signup`, newUser)
       .then(response => {
         setRedirect(true);
       })
@@ -61,7 +61,7 @@ const Signup = () => {
   }
 
   return (
-    <div className="container" style={{ background: "linear-gradient(to bottom, #98FB98, #FFC0CB)" }}>
+    <div className="container" style={{ background: "linear-gradient(to bottom, #98FB98, #FFC0CB)", height: '100vh', width: '100%' }}>
       <br />
       <br />
       <br />
@@ -75,7 +75,7 @@ const Signup = () => {
                   <img
                     src="/logo.png"
                     alt=""
-                    style={{ width: '220px', height: '220px' }}
+                    style={{ width: '400px', height: '400px' }}
                   />
                   <h1>Sign Up</h1>
                   <p className="text-muted">Create an account below to get started</p>
