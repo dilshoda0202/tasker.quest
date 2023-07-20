@@ -16,7 +16,7 @@ const NewEvent = () => {
     const [endDate, setEndDate] = useState(null);
     const [priority, setPriority] = useState('Medium');
     const [location, setLocation] = useState('');
-    const [category, setCategory] = useState('');
+    const [category, setCategory] = useState('Personal');
     const [currentUser, setCurrentUser] = useState(null);
 
     const router = useRouter();
@@ -134,7 +134,7 @@ const NewEvent = () => {
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
                             <label htmlFor="title">Title</label>
-                            <input
+                            <input required
                                 type="text"
                                 name="title"
                                 value={title}
@@ -144,7 +144,7 @@ const NewEvent = () => {
                         </div>
                         <div className="form-group">
                             <label htmlFor="description">Description</label>
-                            <input
+                            <input required
                                 type="text"
                                 name="description"
                                 value={description}
@@ -154,7 +154,7 @@ const NewEvent = () => {
                         </div>
                         <div className="form-group">
                             <label htmlFor="startDate">Start Date</label>
-                            <DatePicker
+                            <DatePicker required
                                 selected={startDate}
                                 onChange={handleStartDateChange}
                                 dateFormat="yyyy-MM-dd"
@@ -163,7 +163,7 @@ const NewEvent = () => {
                         </div>
                         <div className="form-group">
                             <label htmlFor="endDate">End Date</label>
-                            <DatePicker
+                            <DatePicker required
                                 selected={endDate}
                                 onChange={handleEndDateChange}
                                 dateFormat="yyyy-MM-dd"
@@ -172,7 +172,7 @@ const NewEvent = () => {
                         </div>
                         <div className="form-group">
                             <label htmlFor="priority">Priority</label>
-                            <select
+                            <select required
                                 name="priority"
                                 value={priority}
                                 onChange={handlePriority}
@@ -185,7 +185,7 @@ const NewEvent = () => {
                         </div>
                         <div className="form-group">
                             <label htmlFor="location">Location</label>
-                            <input
+                            <input required
                                 type="text"
                                 name="location"
                                 value={location}
@@ -195,7 +195,7 @@ const NewEvent = () => {
                         </div>
                         <div className="form-group">
                             <label htmlFor="category">Category</label>
-                            <select
+                            <select required
                                 name="category"
                                 value={category}
                                 onChange={handleCategory}
