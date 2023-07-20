@@ -14,7 +14,7 @@ export default function EventTable({ events }) {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is zero-indexed
     const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
+    return `${ year }-${ month }-${ day }`;
   };
 
   const calculateTimeRemaining = (end) => {
@@ -36,9 +36,9 @@ export default function EventTable({ events }) {
     const seconds = totalSeconds % 60;
 
     if (days > 0) {
-      return `${days} day${days > 1 ? 's' : ''} ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      return `${ days } day${ days > 1 ? 's' : '' } ${ hours.toString().padStart(2, '0') }:${ minutes.toString().padStart(2, '0') }:${ seconds.toString().padStart(2, '0') }`;
     } else {
-      return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      return `${ hours.toString().padStart(2, '0') }:${ minutes.toString().padStart(2, '0') }:${ seconds.toString().padStart(2, '0') }`;
     }
   };
 
