@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Event from './Event';
 import jwt_decode from 'jwt-decode';
+import axios from 'axios';
+import 'src/app/EventDisplay.css'; // Import the CSS file
 
 export default function EventTable({ events }) {
   const user = jwt_decode(localStorage.getItem('jwtToken'));
@@ -42,26 +43,39 @@ export default function EventTable({ events }) {
     }
   };
 
+  const markCompleted = (eventId) => {
+    axios
+      .put(`/events/${eventId}`, { status: 'completed' })
+      .then(response => {
+        console.log('Event updated:', response.data.event);
+        // Update the events state by removing the completed event
+        setEventList(prevEvents =>
+          prevEvents.filter(event => event._id !== eventId)
+        );
+      })
+      .catch(error => {
+        console.log('Error updating event:', error);
+      });
+  };
+
+
+
+
   // State variable to store the timers for each card
   const [timers, setTimers] = useState({});
 
-  // Function to mark a task as completed
-  const markCompleted = (taskId) => {
-    const completedTask = tasks.find((task) => task._id === taskId);
-    if (completedTask) {
-      setCompletedTasks([...completedTasks, { ...completedTask, title: 'Completed Task' }]);
-      setTasks(tasks.filter((task) => task._id !== taskId));
-    }
-  };
+  // State variable to store events and completed events
+  const [eventList, setEventList] = useState(userEvents);
 
-  // Function to delete a task
-  const deleteTask = (taskId) => {
-    setTasks(tasks.filter((task) => task._id !== taskId));
-  };
+  // Filter completed events
+  const completedEvents = eventList.filter(event => event.status === 'completed');
+
+  // Filter active events
+  const activeEvents = eventList.filter(event => event.status !== 'completed');
 
   useEffect(() => {
     // Start the timer for each card with an end date
-    userEvents.forEach((event) => {
+    events.forEach((event) => {
       if (!timers[event._id] && event.endDate) {
         const interval = setInterval(() => {
           const remaining = calculateTimeRemaining(event.endDate);
@@ -80,65 +94,96 @@ export default function EventTable({ events }) {
       // Clear all intervals when the component is unmounted
       Object.values(timers).forEach((interval) => clearInterval(interval));
     };
-  }, [timers, userEvents]);
+  }, [events, timers]);
 
-  // State variables to store tasks and completed tasks
-  const [tasks, setTasks] = useState(userEvents);
-  const [completedTasks, setCompletedTasks] = useState([]);
 
   return (
-    <div style={{ background: 'linear-gradient(to bottom right, #FFB6C1, #ADD8E6)', display: 'flex', flexWrap: 'wrap', gap: '20px', padding: '20px' }}>
-      {tasks.map((task) => (
-        <div
-          key={task._id}
-          style={{
-            width: '300px',
-            backgroundColor: '#90EE90', // Light green background color for the card
-            border: '1px solid #ccc',
-            padding: '10px',
-            borderRadius: '8px',
-            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-            textDecoration: task.completed ? 'line-through' : 'none', // Apply strikethrough style if the task is completed
-          }}
-        >
-          <h2>{task.title}</h2>
-          <p>{task.description}</p>
-          <p>Start Date: {formatDate(task.startDate)}</p>
-          <p>End Date: {formatDate(task.endDate)}</p>
-          <p>Priority: {task.priority}</p>
-          <p>Location: {task.location}</p>
-          <p>Category: {task.category}</p>
-          <p>User: {task.user}</p>
-          {timers[task._id] !== null && timers[task._id] > 0 && (
-            <p>Time Remaining: {formatTime(timers[task._id])}</p>
-          )}
-          <button onClick={() => markCompleted(task._id)}>Completed</button>
-          <button onClick={() => deleteTask(task._id)}>Delete</button>
-        </div>
-      ))}
-      {completedTasks.map((completedTask) => (
-        <div
-          key={completedTask._id}
-          style={{
-            width: '300px',
-            backgroundColor: '#90EE90', // Light green background color for the completed card
-            border: '1px solid #ccc',
-            padding: '10px',
-            borderRadius: '8px',
-            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-            textDecoration: 'line-through', // Apply strikethrough style for completed tasks
-          }}
-        >
-          <h2>{completedTask.title}</h2>
-          <p>{completedTask.description}</p>
-          <p>Start Date: {formatDate(completedTask.startDate)}</p>
-          <p>End Date: {formatDate(completedTask.endDate)}</p>
-          <p>Priority: {completedTask.priority}</p>
-          <p>Location: {completedTask.location}</p>
-          <p>Category: {completedTask.category}</p>
-          <p>User: {completedTask.user}</p>
-        </div>
-      ))}
+    <div style={{ background: 'linear-gradient(to bottom right, #FFB6C1, #ADD8E6)', padding: '20px' }}>
+      <h1>Active Events</h1>
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
+        {activeEvents.map((event) => (
+          <div key={event._id} className="card card-body custom-card">
+            <h2 className="card-title">{event.title}</h2>
+            <div className="card-attribute">
+              <div className="attribute-card">
+                <strong>Description:</strong> {event.description}
+              </div>
+            </div>
+            <div className="card-attribute">
+              <div className="attribute-card">
+                <strong>Start Date:</strong> {formatDate(event.startDate)}
+              </div>
+            </div>
+            <div className="card-attribute">
+              <div className="attribute-card">
+                <strong>End Date:</strong> {formatDate(event.endDate)}
+              </div>
+            </div>
+            <div className="card-attribute">
+              <div className="attribute-card">
+                <strong>Priority:</strong> {event.priority}
+              </div>
+            </div>
+            <div className="card-attribute">
+              <div className="attribute-card">
+                <strong>Location:</strong> {event.location}
+              </div>
+            </div>
+            <div className="card-attribute">
+              <div className="attribute-card">
+                <strong>Category:</strong> {event.category}
+              </div>
+            </div>
+            {timers[event._id] !== null && timers[event._id] > 0 && (
+              <div className="card-attribute">
+                <div className="attribute-card">
+                  <strong>Time Remaining:</strong> {formatTime(timers[event._id])}
+                </div>
+              </div>
+            )}
+            <button onClick={() => markCompleted(event._id)}>Completed</button>
+          </div>
+        ))}
+      </div>
+
+      <h1>Completed Events</h1>
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
+        {completedEvents.map((completedEvent) => (
+          <div key={completedEvent._id} className="card card-body custom-card">
+            <h2 className="card-title">{completedEvent.title}</h2>
+            <div className="card-attribute">
+              <div className="attribute-card">
+                <strong>Description:</strong> {completedEvent.description}
+              </div>
+            </div>
+            <div className="card-attribute">
+              <div className="attribute-card">
+                <strong>Start Date:</strong> {formatDate(completedEvent.startDate)}
+              </div>
+            </div>
+            <div className="card-attribute">
+              <div className="attribute-card">
+                <strong>End Date:</strong> {formatDate(completedEvent.endDate)}
+              </div>
+            </div>
+            <div className="card-attribute">
+              <div className="attribute-card">
+                <strong>Priority:</strong> {completedEvent.priority}
+              </div>
+            </div>
+            <div className="card-attribute">
+              <div className="attribute-card">
+                <strong>Location:</strong> {completedEvent.location}
+              </div>
+            </div>
+            <div className="card-attribute">
+              <div className="attribute-card">
+                <strong>Category:</strong> {completedEvent.category}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

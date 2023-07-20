@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useEffect, useState } from 'react';
 import EventTable from './EventTable';
 
@@ -16,11 +16,12 @@ export default function FilterableTaskTable() {
         // console.log(data)
         setLoading(false);
 
-      })
+      });
+
   }, []);
 
-  if (isLoading) return <p>Loading...</p>
-  if (!data) return <p>No data shown...</p>
+  if (isLoading) return <p>Loading...</p>;
+  if (!data) return <p>No data shown...</p>;
 
   return (
     <main>
@@ -29,5 +30,5 @@ export default function FilterableTaskTable() {
 
 
 
-  )
+  );
 }
