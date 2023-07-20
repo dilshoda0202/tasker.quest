@@ -1,4 +1,5 @@
 # `Tasker Quest`
+![logo](./public/logo.png)
 
 An event tracker application to help you remember those important dates!
 
@@ -11,7 +12,7 @@ An event tracker application to help you remember those important dates!
 ## Accessing the Website Online
 Visit: taskerquest.netlify.app
 
-## User stories 
+## User Stories 
 - As a user, I want to be able to create tasks so that I can keep track of my to-do list and prioritize my work.
 - As a user, I want to be able to set due dates for tasks so that I can manage my time effectively and meet deadlines.
 - As a user, I want to be able to view and track the progress of tasks so that I can see how much has been completed and what still needs to be done.
