@@ -107,11 +107,21 @@ export default function EventTable({ events }) {
   const [completedTasks, setCompletedTasks] = useState([]);
 
   return (
-    <div style={{ background: 'linear-gradient(to bottom right, #FFB6C1, #ADD8E6)', display: 'flex', flexWrap: 'wrap', gap: '20px', padding: '20px' }}>
+    <div style={{ background: 'linear-gradient(to bottom right, #FFB6C1, #ADD8E6)', display: 'flex', flexWrap: 'wrap', gap: '20px', padding: '20px', height: '100vh' }}>
+      <nav aria-label="breadcrumb" className="main-breadcrumb">
+        <ol className="breadcrumb" style={{ display: "flex" }}>
+          <li className="breadcrumb-item"><a href="/">Home</a></li>
+          <li className="breadcrumb-item"><a href="/users/profile">Profile</a></li>
+          <li className="breadcrumb-item"><a href="/users/edit">Edit Profile</a></li>
+          <li className="breadcrumb-item"><a href="/users/events-2">Event List</a></li>
+          <li className="breadcrumb-item"><a href="/users/events-2/new">Create Event</a></li>
+        </ol>
+      </nav>
       {tasks.map((task) => (
         <div
           key={task._id}
           style={{
+            height: '300px',
             width: '300px',
             backgroundColor: '#90EE90', // Light green background color for the card
             border: '1px solid #ccc',

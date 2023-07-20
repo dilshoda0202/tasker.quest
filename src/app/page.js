@@ -1,36 +1,35 @@
-'use client';
-import 'bulma/css/bulma.min.css';
-import Image from 'next/image';
-import styles from './page.module.css';
-import { useEffect, useState } from 'react';
-import setAuthToken from './utils/setAuthToken';
+import React from 'react';
 
-// we are going to be fetching data from our API and displaying it on
-// the page
-
-export default function Home() {
-  // state is what the data is representing in realtime
-  const [data, setData] = useState(null);
-  const [isLoading, setLoading] = useState(false);
-  const [age, setAge] = useState(null);
-  const [name, setName] = useState('Dylan');
-
-  useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/`)
-      .then((res) => res.json())
-      .then((data) => {
-        // data is an object
-        setData(data);
-        setLoading(false);
-      });
-  }, []);
-
-  if (isLoading) return <p>Loading...</p>;
-  if (!data) return <p>No data shown...</p>;
-
+const Page = () => {
   return (
-    <main className={styles.main}>
-      <p>{data.message}</p>
-    </main>
+    <div className="container" style={{ background: "linear-gradient(to bottom, #98FB98, #FFC0CB)", height: '100vh', width: '100%', margin: 'fill' }}>
+      <div className='landing-section'
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100vh',
+        }}
+      >
+        <img
+          src="/logo.png" // Replace this with the path to your logo image
+          alt="Logo"
+          style={{
+            width: '300px', // Adjust the width as needed
+            height: '300px', // Adjust the height as needed
+          }}
+        />
+
+        <p>Welcome to Tasker Quest</p>
+
+        <div style={{ marginTop: '20px' }}>
+          <button style={{ marginRight: '10px', backgroundColor: 'white' }}><a href="/users/tasks-2/new">Create Task</a></button>
+          <button style={{ marginRight: '10px', backgroundColor: 'white' }}><a href="/users/events-2/new">Create Event</a></button>
+        </div>
+      </div>
+    </div>
   );
-}
+};
+
+export default Page;
