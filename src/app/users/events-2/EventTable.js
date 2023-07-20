@@ -4,6 +4,7 @@ import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import 'src/app/NewEvent.css'; // Import custom CSS for styling
 
+
 export default function EventTable({ events }) {
   const user = jwt_decode(localStorage.getItem('jwtToken'));
 
@@ -108,6 +109,8 @@ export default function EventTable({ events }) {
   const [completedTasks, setCompletedTasks] = useState([]);
 
   return (
+
+    <div style={{ background: 'linear-gradient(to bottom right, #FFB6C1, #ADD8E6)', display: 'flex', flexWrap: 'wrap', gap: '20px', padding: '20px', height: '100vh' }}>
     <div className="custom-card-container"> {/* Add a container class */}
       <nav aria-label="breadcrumb" className="main-breadcrumb">
         <ol className="breadcrumb" style={{ display: "flex" }}>
@@ -123,6 +126,13 @@ export default function EventTable({ events }) {
           key={task._id}
           className="custom-card" // Apply the custom-card class
           style={{
+            height: '300px',
+            width: '300px',
+            backgroundColor: '#90EE90', // Light green background color for the card
+            border: '1px solid #ccc',
+            padding: '10px',
+            borderRadius: '8px',
+            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
             textDecoration: task.completed ? 'line-through' : 'none', // Apply strikethrough style if the task is completed
           }}
         >

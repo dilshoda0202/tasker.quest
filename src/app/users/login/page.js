@@ -1,6 +1,6 @@
-"use client";
+'use client'
 import 'bootstrap/dist/css/bootstrap.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import setAuthToken from '@/app/utils/setAuthToken';

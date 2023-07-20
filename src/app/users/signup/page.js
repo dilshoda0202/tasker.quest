@@ -11,6 +11,7 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
+  const [firstName, setfirstName] = useState('');
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -20,10 +21,15 @@ const Signup = () => {
     setPassword(e.target.value);
   };
 
+  const handlefirstName = (e) => {
+    setfirstName(e.target.value);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const newUser = {
+      firstName,
       email,
       password,
     };
@@ -79,6 +85,10 @@ const Signup = () => {
                   />
                   <h1>Sign Up</h1>
                   <p className="text-muted">Create an account below to get started</p>
+                  <div className="input-group mb-3">
+										<span className="input-group-addon"><i className="fa fa-whatsapp"></i></span>
+										<input type="text" className="form-control" placeholder="First Name" value={firstName} onChange={handlefirstName} required/>
+									</div>
                   <div className="input-group mb-3">
                     <span className="input-group-addon"><i className="fa fa-mail-forward" aria-hidden="true"></i></span>
                     <input type="email" className="form-control" placeholder="Email" value={email} onChange={handleEmail} required />
