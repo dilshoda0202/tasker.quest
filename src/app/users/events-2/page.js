@@ -17,6 +17,7 @@ export default function FilterableTaskTable() {
         setLoading(false);
 
       });
+
   }, []);
 
   if (isLoading) return <p>Loading...</p>;
