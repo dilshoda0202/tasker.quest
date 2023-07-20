@@ -1,31 +1,21 @@
 import React from 'react';
+import './Page.css';
 
 const Page = () => {
   return (
-    <div className="container" style={{ background: "linear-gradient(to bottom, #98FB98, #FFC0CB)", height: '100vh', width: '100%', margin: 'fill' }}>
-      <div className='landing-section'
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '100vh',
-        }}
-      >
+    <div className="container">
+      <div className='landing-section'>
         <img
-          src="/logo.png" // Replace this with the path to your logo image
+          src="/logo.png"
           alt="Logo"
-          style={{
-            width: '300px', // Adjust the width as needed
-            height: '300px', // Adjust the height as needed
-          }}
+          className="logo-image"
         />
 
-        <p>Welcome to Tasker Quest</p>
+        <h1 className="landing-title">Welcome to Tasker Quest</h1>
 
-        <div style={{ marginTop: '20px' }}>
-          <button style={{ marginRight: '10px', backgroundColor: 'white' }}><a href="/users/tasks-2/new">Create Task</a></button>
-          <button style={{ marginRight: '10px', backgroundColor: 'white' }}><a href="/users/events-2/new">Create Event</a></button>
+        <div className="buttons-container">
+          <button><a href="/users/tasks-2/new">Create Task</a></button>
+          <button><a href="/users/events-2/new">Create Event</a></button>
         </div>
       </div>
     </div>
