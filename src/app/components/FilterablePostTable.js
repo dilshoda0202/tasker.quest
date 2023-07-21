@@ -8,7 +8,7 @@ export default function FilterablePostTable() {
     const [isLoading, setLoading] = useState(true);
   
     useEffect(() => {
-      fetch('https://tasker-quest-9fb4bb1947ad.herokuapp.com/posts')
+      fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/posts`)
       .then((res) => res.json())
       .then((data) => {
         // data is an object

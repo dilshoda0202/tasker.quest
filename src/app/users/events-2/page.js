@@ -8,7 +8,7 @@ export default function FilterableTaskTable() {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('https://tasker-quest-9fb4bb1947ad.herokuapp.com/events')
+    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/events`)
       .then((res) => res.json())
       .then((newData) => {
         // console.log('Can you see newData?', newData)
