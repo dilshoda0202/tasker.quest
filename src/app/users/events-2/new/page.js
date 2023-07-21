@@ -7,6 +7,7 @@ import handleLogout from '@/app/utils/handleLogout';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'src/app/NewEvent.css';
+import WeatherWidget from 'src/app/WeatherWidget.js';
 
 const NewEvent = () => {
     const [user, setUser] = useState('');
@@ -106,11 +107,13 @@ const NewEvent = () => {
             .catch((error) => console.log('===> Error in Task', error));
     };
 
-    const categoryOptions = ["Personal", "School", "Work", "Other"];
+    const categoryOptions = ['Personal', 'School', 'Work', 'Other'];
 
     return (
         <div className="row mt-4">
-            <div className="col-md-7 offset-md-3">
+            <div className="col-md-6">
+
+                {/* Form Section */}
                 <div className="card card-body custom-card">
                     <nav aria-label="breadcrumb" className="main-breadcrumb">
                         <ol className="breadcrumb" style={{ display: "flex" }}>
@@ -131,6 +134,14 @@ const NewEvent = () => {
                             </h1>
                         </div>
                     )}
+                    <div className="col-md-6">
+                        <div className="weather-widget-container">
+                            <WeatherWidget />
+                        </div>
+                    </div>
+                    <div>
+
+                    </div>
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
                             <label htmlFor="title">Title</label>
@@ -222,9 +233,9 @@ const NewEvent = () => {
                             Submit
                         </button>
                     </form>
-
                 </div>
             </div>
+
         </div>
     );
 };
