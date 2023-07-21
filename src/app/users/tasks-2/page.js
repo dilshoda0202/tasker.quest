@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useEffect, useState } from 'react';
 import TaskTable from './taskTable';
 
@@ -16,8 +16,8 @@ export default function FilterableTaskTable() {
 
   }, []);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (!data) return <p>No data shown...</p>;
+  if (isLoading) return <p>Loading...</p>
+  if (!data) return <p>No data shown...</p>
 
   return (
     <main>

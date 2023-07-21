@@ -1,9 +1,8 @@
+// EventTable.js
 import React, { useState, useEffect } from 'react';
-import Event from './Event';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
-import 'src/app/NewEvent.css'; // Import custom CSS for styling
-
+import 'src/app/EventDisplay.css';
 
 export default function EventTable({ events }) {
   const user = jwt_decode(localStorage.getItem('jwtToken'));
@@ -48,31 +47,46 @@ export default function EventTable({ events }) {
   // State variable to store the timers for each card
   const [timers, setTimers] = useState({});
 
-  // Function to mark a task as completed
+  // State variable to store tasks
+  const [tasks, setTasks] = useState(userEvents);
+
   const markCompleted = (taskId) => {
-    const completedTask = userEvents.find((event) => event._id === taskId);
-    if (completedTask) {
-      axios.put(`${process.env.NEXT_PUBLIC_SERVER_URL}/events/${taskId}`, { title: 'Completed Task' })
-        .then((response) => {
-          setTasks((prevTasks) => {
-            return prevTasks.map((event) => {
-              if (event._id === taskId) {
-                return { ...event, title: 'Completed Task' };
-              } else {
-                return event;
-              }
-            });
-          });
-        })
-        .catch((error) => {
-          console.log('Error:', error);
-        });
-    }
+    axios
+      .put(`${process.env.NEXT_PUBLIC_SERVER_URL}/events/${taskId}`, {
+        title: 'Event Completed',
+        completed: true, // Add completed property
+      })
+      .then((response) => {
+        // Update the tasks state to reflect the changes
+        setTasks((prevTasks) =>
+          prevTasks.map((event) =>
+            event._id === taskId ? { ...event, title: 'Event Completed', completed: true } : event
+          )
+        );
+      })
+      .catch((error) => {
+        console.log('Error:', error);
+      });
+  };
+
+  const handleEdit = (taskId, updatedTask) => {
+    axios
+      .put(`${process.env.NEXT_PUBLIC_SERVER_URL}/events/${taskId}`, updatedTask)
+      .then((response) => {
+        // Update the tasks state to reflect the changes
+        setTasks((prevTasks) =>
+          prevTasks.map((event) => (event._id === taskId ? { ...event, ...updatedTask } : event))
+        );
+      })
+      .catch((error) => {
+        console.log('Error:', error);
+      });
   };
 
   // Function to delete a task
   const deleteTask = (taskId) => {
-    axios.delete(`${process.env.NEXT_PUBLIC_SERVER_URL}/events/${taskId}`)
+    axios
+      .delete(`${process.env.NEXT_PUBLIC_SERVER_URL}/events/${taskId}`)
       .then((response) => {
         setTasks(userEvents.filter((event) => event._id !== taskId));
       })
@@ -104,61 +118,163 @@ export default function EventTable({ events }) {
     };
   }, [timers, userEvents]);
 
-  // State variables to store tasks and completed tasks
-  const [tasks, setTasks] = useState(userEvents);
-  const [completedTasks, setCompletedTasks] = useState([]);
+  // State variable to store the task being edited
+  const [editedTask, setEditedTask] = useState(null);
+
+  // Handle form input change for the edited task
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setEditedTask((prevEditedTask) => ({
+      ...prevEditedTask,
+      [name]: value,
+    }));
+  };
+
+  // Handle form submission for updating the task
+  const handleFormSubmit = (event, taskId) => {
+    event.preventDefault();
+    handleEdit(taskId, editedTask);
+    setEditedTask(null); // Clear the edited task state after updating
+  };
+
+  // Separate upcoming and past events based on the title
+  const upcomingEvents = tasks.filter((task) => task.title !== 'Event Completed');
+  const pastEvents = tasks.filter((task) => task.title === 'Event Completed');
 
   return (
-
-    <div style={{ background: 'linear-gradient(to bottom right, #FFB6C1, #ADD8E6)', display: 'flex', flexWrap: 'wrap', gap: '20px', padding: '20px', height: '100vh' }}>
-      <div className="custom-card-container"> {/* Add a container class */}
+    <div className="event-table-container">
+      <div className="page-title-container">
+        <h1 className="events-title">EVENTS</h1>
+      </div>
+      <div className="breadcrumb-container">
         <nav aria-label="breadcrumb" className="main-breadcrumb">
-          <ol className="breadcrumb" style={{ display: "flex" }}>
-            <li className="breadcrumb-item"><a href="/">Home</a></li>
-            <li className="breadcrumb-item"><a href="/users/profile">Profile</a></li>
-            <li className="breadcrumb-item"><a href="/users/edit">Edit Profile</a></li>
-            <li className="breadcrumb-item"><a href="/users/events-2">Event List</a></li>
-            <li className="breadcrumb-item"><a href="/users/events-2/new">Create Event</a></li>
+          <ol className="breadcrumb" style={{ display: 'flex' }}>
+            <li className="breadcrumb-item">
+              <a href="/">Home</a>
+            </li>
+            <li className="breadcrumb-item">
+              <a href="/users/profile">Profile</a>
+            </li>
+            <li className="breadcrumb-item">
+              <a href="/users/edit">Edit Profile</a>
+            </li>
+            <li className="breadcrumb-item">
+              <a href="/users/events-2">Event List</a>
+            </li>
+            <li className="breadcrumb-item">
+              <a href="/users/events-2/new">Create Event</a>
+            </li>
           </ol>
         </nav>
-        {tasks.map((task) => (
+      </div>
+
+      <div className="separator-line"></div> {/* separation line */}
+
+      {/* Upcoming tasks */}
+      <div className="card-container">
+        <h2 className="section-title">Upcoming Events</h2> {/*section title */}
+        {upcomingEvents.map((task) => (
           <div
             key={task._id}
-            className="custom-card" // Apply the custom-card class
+            className="card"
             style={{
-              height: '300px',
-              width: '300px',
-              backgroundColor: '#90EE90', // Light green background color for the card
-              border: '1px solid #ccc',
-              padding: '10px',
-              borderRadius: '8px',
-              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-              textDecoration: task.completed ? 'line-through' : 'none', // Apply strikethrough style if the task is completed
+              textDecoration: task.completed ? 'line-through' : 'none',
             }}
           >
-            <h2 className="custom-heading">{task.title}</h2> {/* Apply the custom-heading class */}
-            <p>{task.description}</p>
-            <p>Start Date: {formatDate(task.startDate)}</p>
-            <p>End Date: {formatDate(task.endDate)}</p>
-            <p>Priority: {task.priority}</p>
-            <p>Location: {task.location}</p>
-            <p>Category: {task.category}</p>
-            {timers[task._id] !== null && timers[task._id] > 0 && (
-              <p>Time Remaining: {formatTime(timers[task._id])}</p>
+            {editedTask && editedTask._id === task._id ? (
+              <form onSubmit={(e) => handleFormSubmit(e, task._id)}>
+                <input
+                  type="text"
+                  name="title"
+                  value={editedTask.title}
+                  onChange={handleInputChange}
+                  required
+                />
+                <textarea
+                  name="description"
+                  value={editedTask.description}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="startDate"
+                  value={editedTask.startDate}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="endDate"
+                  value={editedTask.endDate}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="priority"
+                  value={editedTask.priority}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="location"
+                  value={editedTask.location}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="category"
+                  value={editedTask.category}
+                  onChange={handleInputChange}
+                  required
+                />
+                <button type="submit">Update</button>
+                <button type="button" onClick={() => setEditedTask(null)}>
+                  Cancel
+                </button>
+              </form>
+            ) : (
+              <>
+                <h2 className="card-title">{task.title}</h2>
+                <p>{task.description}</p>
+                <p>Start Date: {formatDate(task.startDate)}</p>
+                <p>End Date: {formatDate(task.endDate)}</p>
+                <p>Priority: {task.priority}</p>
+                <p>Location: {task.location}</p>
+                <p>Category: {task.category}</p>
+                {timers[task._id] !== null && timers[task._id] > 0 && (
+                  <p>Time Remaining: {formatTime(timers[task._id])}</p>
+                )}
+                {!task.completed && (
+                  <>
+                    <button onClick={() => markCompleted(task._id)}>Completed</button>
+                    <button onClick={() => deleteTask(task._id)}>Delete</button>
+                    <button onClick={() => setEditedTask(task)}>Edit</button>
+                  </>
+                )}
+              </>
             )}
-            <button onClick={() => markCompleted(task._id)}>Completed</button>
-            <button onClick={() => deleteTask(task._id)}>Delete</button>
           </div>
         ))}
-        {completedTasks.map((completedTask) => (
+      </div>
+
+      <div className="separator-line"></div> {/* separation line */}
+
+      {/* Past tasks */}
+      <div className="card-container">
+        <h2 className="section-title">Past Events</h2> {/* section title */}
+        {pastEvents.map((completedTask) => (
           <div
             key={completedTask._id}
-            className="custom-card" // Apply the custom-card class
+            className="card"
             style={{
-              textDecoration: 'line-through', // Apply strikethrough style for completed tasks
+              textDecoration: 'line-through',
             }}
           >
-            <h2 className="custom-heading">{completedTask.title}</h2> {/* Apply the custom-heading class */}
+            <h2 className="card-title">{completedTask.title}</h2>
             <p>{completedTask.description}</p>
             <p>Start Date: {formatDate(completedTask.startDate)}</p>
             <p>End Date: {formatDate(completedTask.endDate)}</p>
@@ -166,6 +282,8 @@ export default function EventTable({ events }) {
             <p>Location: {completedTask.location}</p>
             <p>Category: {completedTask.category}</p>
             <p>User: {completedTask.user}</p>
+            {/* delete button for completed tasks */}
+            <button onClick={() => deleteTask(completedTask._id)}>Delete</button>
           </div>
         ))}
       </div>
