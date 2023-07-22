@@ -169,7 +169,7 @@ export default function EventTable({ events }) {
               <a href="/users/events-2/new">Create Event</a>
             </li>
             <li className="breadcrumb-item">
-              <a href="/users/tasks-2/new">Create Task</a>
+              <a href="/users/tasks-2">Upcoming Task</a>
             </li>  <li className="breadcrumb-item">
               <a href="/users/tasks-2/new">Create Task</a>
             </li>  <li className="breadcrumb-item">
