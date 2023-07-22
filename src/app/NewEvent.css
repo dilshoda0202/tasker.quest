@@ -1,3 +1,4 @@
+/* css */
 .custom-card {
     background-color: #d9ead3;
     padding: 20px;
@@ -17,7 +18,6 @@
 
 .custom-card:hover {
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
-    /* Increased box-shadow on hover */
 }
 
 .custom-heading {
@@ -44,31 +44,26 @@
 @keyframes color-change {
     0% {
         color: #836e56;
-        /* Darker Brown */
         transform: translateY(0);
     }
 
     25% {
         color: #978c75;
-        /* Darker Tan */
         transform: translateY(-10px);
     }
 
     50% {
         color: #a79b7c;
-        /* Darker Yellow */
         transform: translateY(0);
     }
 
     75% {
         color: #7b6d57;
-        /* Darker Olive */
         transform: translateY(10px);
     }
 
     100% {
         color: #836e56;
-        /* Darker Brown */
         transform: translateY(0);
     }
 }
@@ -96,7 +91,6 @@
     background-color: #fff2cc;
 }
 
-/* New styles for the React component container */
 .event-table-container {
     display: flex;
     flex-wrap: wrap;
@@ -104,68 +98,28 @@
     justify-content: space-between;
 }
 
-/* Styles for the incomplete tasks */
-.event-table-container .custom-card.incomplete {
-    height: 150px;
-    width: 200px;
-    background-color: #d9ead3;
+.weather-widget-container {
+    margin-right: 20px;
+    margin-top: -10px;
+    padding-bottom: 20px;
+    width: 100%;
+}
+
+.weather-widget {
     border: 1px solid #ccc;
     padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: box-shadow 0.3s ease-in-out;
-    text-decoration: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.event-table-container .custom-card.incomplete:hover {
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
-}
-
-.event-table-container .custom-heading {
-    color: #918a74;
-    transition: color 0.3s ease-in-out;
-    font-size: 28px;
     margin-bottom: 20px;
+    width: 100%;
+    height: 300px;
 }
 
-.event-table-container .custom-heading:hover {
-    color: #fff2cc;
-}
+@media (max-width: 768px) {
+    .weather-widget-container {
+        margin-right: 0;
+    }
 
-/* New styles for the completed tasks */
-.event-table-container .custom-card.completed {
-    height: 150px;
-    width: 200px;
-    background-color: #d9ead3;
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: box-shadow 0.3s ease-in-out;
-    text-decoration: line-through;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.event-table-container .completed:hover {
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
-}
-
-.event-table-container .completed .custom-heading {
-    color: #918a74;
-    transition: color 0.3s ease-in-out;
-    font-size: 28px;
-    margin-bottom: 20px;
-}
-
-.event-table-container .completed .custom-heading:hover {
-    color: #fff2cc;
+    .col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
 }

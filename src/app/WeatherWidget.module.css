@@ -1,0 +1,79 @@
+/* {css} */
+.weatherCard {
+    background-color: #a7cbf3;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.weatherWidget {
+    width: 300px;
+}
+
+.weatherHeading {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.weatherIcon {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+.weatherDescription {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.weatherTemp {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.weatherInfo {
+    font-size: 14px;
+    color: #666;
+}
+
+.react-autosuggest__input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.react-autosuggest__suggestions-container {
+    display: none;
+}
+
+.react-autosuggest__suggestions-container--open {
+    display: block;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 1;
+}
+
+.react-autosuggest__suggestion {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.react-autosuggest__suggestion--highlighted {
+    background-color: #f0f0f0;
+}
