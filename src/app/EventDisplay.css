@@ -27,19 +27,16 @@
 
     50% {
         color: #a79b7c;
-        /* Darker Yellow */
         transform: translateY(0);
     }
 
     75% {
         color: #7b6d57;
-        /* Darker Olive */
         transform: translateY(10px);
     }
 
     100% {
         color: #836e56;
-        /* Darker Brown */
         transform: translateY(0);
     }
 }
