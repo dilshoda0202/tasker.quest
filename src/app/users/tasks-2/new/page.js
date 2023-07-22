@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -6,7 +6,8 @@ import jwtDecode from 'jwt-decode';
 import handleLogout from '@/app/utils/handleLogout';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-// import 'src/app/NewTask.css';
+import 'src/app/NewEvent.css';
+import WeatherWidget from 'src/app/WeatherWidget.js';
 
 const NewTask = () => {
     const [user, setUser] = useState('');
@@ -15,7 +16,6 @@ const NewTask = () => {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [priority, setPriority] = useState('Medium');
-    const [location, setLocation] = useState('');
     const [category, setCategory] = useState('Personal');
     const [currentUser, setCurrentUser] = useState(null);
 
@@ -30,7 +30,7 @@ const NewTask = () => {
             router.push('/users/login');
         }
         if (localStorage.getItem('jwtToken')) {
-            fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/users/email/${localStorage.getItem('email')}`)
+            fetch(`${ process.env.NEXT_PUBLIC_SERVER_URL }/users/email/${ localStorage.getItem('email') }`)
                 .then((res) => res.json())
                 .then((data) => {
                     const userData = jwtDecode(localStorage.getItem('jwtToken'));
@@ -70,10 +70,6 @@ const NewTask = () => {
         setPriority(e.target.value);
     };
 
-    const handleLocation = (e) => {
-        setLocation(e.target.value);
-    };
-
     const handleCategory = (e) => {
         setCategory(e.target.value);
     };
@@ -92,33 +88,32 @@ const NewTask = () => {
             startDate,
             endDate,
             priority,
-            location,
             category,
         };
 
         axios
-            .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/tasks`, newTask)
+            .post(`${ process.env.NEXT_PUBLIC_SERVER_URL }/tasks`, newTask)
             .then((response) => {
                 console.log('===> Yay, new task');
                 console.log(response);
                 router.push('/users/tasks-2');
             })
-            .catch((error) => console.log('===> Error in Event', error));
+            .catch((error) => console.log('===> Error in Task', error));
     };
 
-    const categoryOptions = ["Personal", "School", "Work", "Other"];
+    const categoryOptions = ['Personal', 'School', 'Work', 'Other'];
 
     return (
         <div className="row mt-4">
-            <div className="col-md-7 offset-md-3">
+            <div className="col-md-6">
                 <div className="card card-body custom-card">
                     <nav aria-label="breadcrumb" className="main-breadcrumb">
                         <ol className="breadcrumb" style={{ display: "flex" }}>
                             <li className="breadcrumb-item"><a href="/">Home</a></li>
                             <li className="breadcrumb-item"><a href="/users/profile">Profile</a></li>
                             <li className="breadcrumb-item"><a href="/users/edit">Edit Profile</a></li>
-                            <li className="breadcrumb-item"><a href="/users/tasks-2">Task List</a></li>
-                            <li className="breadcrumb-item"><a href="/users/tasks-2/new">Create Task</a></li>
+                            <li className="breadcrumb-item"><a href="/users/events-2">Event List</a></li>
+                            <li className="breadcrumb-item"><a href="/users/events-2/new">Create Event</a></li>
                         </ol>
                     </nav>
                     <h2 className="py-2 text-center custom-heading">
@@ -131,6 +126,14 @@ const NewTask = () => {
                             </h1>
                         </div>
                     )}
+                    <div className="col-md-6">
+                        <div className="weather-widget-container">
+                            <WeatherWidget />
+                        </div>
+                    </div>
+                    <div>
+
+                    </div>
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
                             <label htmlFor="title">Title</label>
@@ -184,16 +187,6 @@ const NewTask = () => {
                             </select>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="location">Location</label>
-                            <input required
-                                type="text"
-                                name="location"
-                                value={location}
-                                onChange={handleLocation}
-                                className="form-control"
-                            />
-                        </div>
-                        <div className="form-group">
                             <label htmlFor="category">Category</label>
                             <select required
                                 name="category"
@@ -222,9 +215,9 @@ const NewTask = () => {
                             Submit
                         </button>
                     </form>
-
                 </div>
             </div>
+
         </div>
     );
 };
