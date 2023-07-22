@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useEffect, useState } from 'react';
 import TaskTable from './taskTable';
 
@@ -8,22 +8,22 @@ export default function FilterableTaskTable() {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:8000/tasks')
+    fetch('https://tasker-quest-9fb4bb1947ad.herokuapp.com/tasks')
       .then((res) => res.json())
       .then((newData) => {
-        console.log('Can you see data?', newData)
+        console.log('Can you see data?', newData);
         // data is an object
         setData(newData.data);
         setLoading(false);
-      })
+      });
   }, []);
 
-  if (isLoading) return <p>Loading...</p>
-  if (!data) return <p>No data shown...</p>
+  if (isLoading) return <p>Loading...</p>;
+  if (!data) return <p>No data shown...</p>;
 
   return (
     <main>
       <TaskTable tasks={data.tasks} />
     </main>
-  )
+  );
 }

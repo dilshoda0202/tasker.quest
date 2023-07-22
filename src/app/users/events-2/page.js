@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useEffect, useState } from 'react';
 import EventTable from './EventTable';
 
@@ -8,19 +8,20 @@ export default function FilterableTaskTable() {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:8000/events')
+    fetch('https://tasker-quest-9fb4bb1947ad.herokuapp.com/events')
       .then((res) => res.json())
       .then((newData) => {
         // console.log('Can you see newData?', newData)
         setData(newData);
         // console.log(data)
         setLoading(false);
-        
-      })
+
+      });
+
   }, []);
 
-  if (isLoading) return <p>Loading...</p>
-  if (!data) return <p>No data shown...</p>
+  if (isLoading) return <p>Loading...</p>;
+  if (!data) return <p>No data shown...</p>;
 
   return (
     <main>
@@ -29,5 +30,5 @@ export default function FilterableTaskTable() {
 
 
 
-  )
+  );
 }

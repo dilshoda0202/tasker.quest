@@ -11,6 +11,7 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
+  const [firstName, setfirstName] = useState('');
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -20,10 +21,15 @@ const Signup = () => {
     setPassword(e.target.value);
   };
 
+  const handlefirstName = (e) => {
+    setfirstName(e.target.value);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const newUser = {
+      firstName,
       email,
       password,
     };
@@ -61,7 +67,7 @@ const Signup = () => {
   }
 
   return (
-    <div className="container" style={{ background: "linear-gradient(to bottom, #98FB98, #FFC0CB)" }}>
+    <div className="container" style={{ background: "linear-gradient(to bottom, #98FB98, #FFC0CB)", height: '100vh', width: '100%' }}>
       <br />
       <br />
       <br />
@@ -72,15 +78,24 @@ const Signup = () => {
             <div className="card p-4" style={{ backgroundColor: "lightgreen" }}>
               <div className="card-body">
                 <form onSubmit={handleSubmit}>
+                  <img
+                    src="/logo.png"
+                    alt=""
+                    style={{ width: '400px', height: '400px' }}
+                  />
                   <h1>Sign Up</h1>
                   <p className="text-muted">Create an account below to get started</p>
                   <div className="input-group mb-3">
+										<span className="input-group-addon"><i className="fa fa-whatsapp"></i></span>
+										<input type="text" className="form-control" placeholder="First Name" value={firstName} onChange={handlefirstName} required/>
+									</div>
+                  <div className="input-group mb-3">
                     <span className="input-group-addon"><i className="fa fa-mail-forward" aria-hidden="true"></i></span>
-                    <input type="email" className="form-control" placeholder="Email" value={email} onChange={handleEmail} required/>
+                    <input type="email" className="form-control" placeholder="Email" value={email} onChange={handleEmail} required />
                   </div>
                   <div className="input-group mb-3">
                     <span className="input-group-addon"><i className="fa fa-lock"></i></span>
-                    <input type="password" className="form-control" placeholder="Password" value={password} onChange={handlePassword} required/>
+                    <input type="password" className="form-control" placeholder="Password" value={password} onChange={handlePassword} required />
                   </div>
                   <div className="row">
                     <div className="col-6">
