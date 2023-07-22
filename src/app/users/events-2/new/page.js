@@ -112,8 +112,6 @@ const NewEvent = () => {
     return (
         <div className="row mt-4">
             <div className="col-md-6">
-
-                {/* Form Section */}
                 <div className="card card-body custom-card">
                     <nav aria-label="breadcrumb" className="main-breadcrumb">
                         <ol className="breadcrumb" style={{ display: "flex" }}>

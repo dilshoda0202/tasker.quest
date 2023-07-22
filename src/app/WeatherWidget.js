@@ -1,5 +1,3 @@
-// WeatherWidget.js
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Autosuggest from 'react-autosuggest';
