@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react';
 import PostTable from './PostTable';
 
 export default function FilterablePostTable() {
-  // state is what the data is representing in realtime
-  const [data, setData] = useState(null);
-  const [isLoading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch('https://tasker-quest-9fb4bb1947ad.herokuapp.com/posts')
+    // state is what the data is representing in realtime
+    const [data, setData] = useState(null);
+    const [isLoading, setLoading] = useState(true);
+  
+    useEffect(() => {
+      fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/posts`)
       .then((res) => res.json())
       .then((data) => {
         // data is an object
