@@ -3,6 +3,10 @@ import React, { useState, useEffect } from 'react';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import 'src/app/EventDisplay.css';
+import WeatherWidget from 'src/app/WeatherWidget.js';
+import handleLogout from '@/app/utils/handleLogout';
+
+
 
 export default function EventTable({ events }) {
   const user = jwt_decode(localStorage.getItem('jwtToken'));
@@ -164,15 +168,27 @@ export default function EventTable({ events }) {
             <li className="breadcrumb-item">
               <a href="/users/events-2/new">Create Event</a>
             </li>
+            <li className="breadcrumb-item">
+              <a href="/users/tasks-2/new">Create Task</a>
+            </li>  <li className="breadcrumb-item">
+              <a href="/users/tasks-2/new">Create Task</a>
+            </li>  <li className="breadcrumb-item">
+              <li className="breadcrumb-item" onClick={handleLogout}><a href="">Logout</a></li>
+            </li>
           </ol>
         </nav>
       </div>
 
       <div className="separator-line"></div> {/* separation line */}
+      <h2 className="section-title">Upcoming Events</h2> {/*section title */}
 
       {/* Upcoming tasks */}
+      <div className="col-md-6">
+        <div className="weather-widget-container">
+          <WeatherWidget />
+        </div>
+      </div>
       <div className="card-container">
-        <h2 className="section-title">Upcoming Events</h2> {/*section title */}
         {upcomingEvents.map((task) => (
           <div
             key={task._id}
@@ -236,8 +252,10 @@ export default function EventTable({ events }) {
                   Cancel
                 </button>
               </form>
+
             ) : (
               <>
+
                 <h2 className="card-title">{task.title}</h2>
                 <p>{task.description}</p>
                 <p>Start Date: {formatDate(task.startDate)}</p>
@@ -262,10 +280,10 @@ export default function EventTable({ events }) {
       </div>
 
       <div className="separator-line"></div> {/* separation line */}
+      <h2 className="section-title">Past Events</h2> {/* section title */}
 
       {/* Past tasks */}
       <div className="card-container">
-        <h2 className="section-title">Past Events</h2> {/* section title */}
         {pastEvents.map((completedTask) => (
           <div
             key={completedTask._id}

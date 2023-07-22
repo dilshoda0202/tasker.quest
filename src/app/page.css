@@ -3,7 +3,8 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background: linear-gradient(to bottom, #98FB98, #FFC0CB);
+    background: linear-gradient(to bottom, #bfe6ba, #ffc0cb);
+    /* Pastel green (#bfe6ba) and pastel pink (#ffc0cb) */
 }
 
 .landing-section {
@@ -43,7 +44,8 @@ a {
 }
 
 button {
-    background-color: rgb(181, 199, 88);
+    background-color: #f9dec9;
+    /* Pastel green */
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
@@ -54,5 +56,6 @@ button {
 }
 
 button:hover {
-    background-color: #ee3d3d;
+    background-color: #e0ead2;
+    /* Pastel pink */
 }
